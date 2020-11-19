@@ -29,4 +29,19 @@ def COA(fs: fuzzySet):
 
 #bisector of area
 def BOA(fs: fuzzySet):
-    pass
+    
+    left, right = fs.domain
+    m = (left + right)/2
+
+    while True:
+        l = simpson(fs.func, left, m, 10)
+        r = simpson(fs.func, m, right, 10)
+
+        if l == r:
+            return m
+        elif l < r:
+            right = m
+        else:
+            left = m
+
+        m = (left + right) /2 
