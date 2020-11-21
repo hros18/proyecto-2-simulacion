@@ -38,12 +38,6 @@ class FuzzyInferenceSystem:
             params.append(min(maxs))
         return params
 
-    def _call_mamdani(params):
-        pass
-
-    def _call_larsen(params):
-        pass
-
     def call_aggregation(method='mamdani', typ='singleton', inputs):
         if typ == 'singleton':
             params = self.singleton_params(inputs)
@@ -54,8 +48,11 @@ class FuzzyInferenceSystem:
         #TODO finish set of params or degrees
 
         if method == 'mamdani':
-            return self._call_mamdani(params)
+            func = lambda z: max (mamdani(param, prec, z) for param, prec in zip(params, self.precs))
         elif method == 'larsen':
-            return self._call_larsen(params)
+            func = lambda z: max (larsen(param, prec, z) for param, prec in zip(params, self.precs))
         else return TypeError('Method not found')
+
+        domain = join([prec.domain for prec in self.precs])
+        return fuzzySet(func, domain)
 
