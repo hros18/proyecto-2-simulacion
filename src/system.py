@@ -1,6 +1,7 @@
-from .aggregation import *
-from .set import fuzzySet
+from aggregation import *
+from fuzzyset import fuzzySet
 import numpy as np
+from helpers import *
 
 class FuzzyInferenceSystem:
 
@@ -19,7 +20,7 @@ class FuzzyInferenceSystem:
             minimum = 10000000000000000000
             for s,i in zip(antc, inputs):
                 minimum = min(minimum, s.func(i))
-            params.append(min)
+            params.append(minimum)
         return params
 
     def _common(f:fuzzySet,s:fuzzySet):
@@ -38,21 +39,23 @@ class FuzzyInferenceSystem:
             params.append(min(maxs))
         return params
 
-    def call_aggregation(method='mamdani', typ='singleton', inputs):
+    def call_aggregation(self, inputs, method = 'mamdani', typ = 'singleton'):
         if typ == 'singleton':
             params = self.singleton_params(inputs)
         elif type == 'fuzzy':
             params = self.fuzzy_params(inputs)
-        else return TypeError('Type not found')
+        else:
+            return TypeError('Type not found')
 
         #TODO finish set of params or degrees
 
         if method == 'mamdani':
-            func = lambda z: max (mamdani(param, prec, z) for param, prec in zip(params, self.precs))
+            func = lambda z: max (mamdani(param, prec, z) for param, prec in zip(params, self.precedents))
         elif method == 'larsen':
-            func = lambda z: max (larsen(param, prec, z) for param, prec in zip(params, self.precs))
-        else return TypeError('Method not found')
+            func = lambda z: max (larsen(param, prec, z) for param, prec in zip(params, self.precedents))
+        else:
+            return TypeError('Method not found')
 
-        domain = join([prec.domain for prec in self.precs])
+        domain = join([prec.domain for prec in self.precedents])
         return fuzzySet(func, domain)
 

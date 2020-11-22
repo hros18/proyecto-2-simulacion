@@ -1,4 +1,4 @@
-from .set import fuzzySet
+from fuzzyset import fuzzySet
 from math import sqrt
 
 class TriangularFuzzyNumber(fuzzySet):
@@ -16,6 +16,7 @@ class TriangularFuzzyNumber(fuzzySet):
             return (x - self.left) / (self.m - self.left)
         if x >= self.m and x <= self.right:
             return (self.right - x) / (self.right - self.m)
+        return 0
 
 class TrapezoidalFuzzyNumber(fuzzySet):
 
@@ -29,9 +30,10 @@ class TrapezoidalFuzzyNumber(fuzzySet):
     def _func(self, x):
         if x < self.left or x > self.right:
             return 0
-        if x >= self.left and x <= self.m1:
+        if x >= self.left and x < self.m1:
             return (x - self.left) / (self.m1 - self.left)
         if x >= self.m1 and x <= self.m2:
             return 1
-        if x >= self.m2 and x <= self.right:
+        if x > self.m2 and x <= self.right:
             return (self.right - x)/ (self.right - self.m2)
+        return 0
