@@ -1,4 +1,5 @@
-from .set import fuzzySet
+from fuzzyset import fuzzySet
+from helpers import *
 
 #mean of maximun method
 def MOM(fs : fuzzySet):
@@ -7,7 +8,7 @@ def MOM(fs : fuzzySet):
 
     left, right = fs.domain
 
-    for i in range(left, righ + 1):
+    for i in range(left, right + 1):
         v = fs.func(i)
         if v == max_value:
             values.append(i)
