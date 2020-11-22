@@ -41,8 +41,16 @@ if __name__ == '__main__':
     print('---Mamdani------')
     result1 = system.call_aggregation(inputs, method='mamdani', typ='singleton')
     print("COA: " + str(round(COA(result1), 2)) + "% of risk")
+    result2 = system.call_aggregation(inputs, method='mamdani', typ='singleton')
+    print("BOA: " + str(round(BOA(result2), 2)) + "% of risk")
+    result3 = system.call_aggregation(inputs, method='mamdani', typ='singleton')
+    print("MOM: " + str(round(MOM(result3), 2)) + "% of risk")
 
     #Mamdani
     print('---Larsen------')
-    result2 = system.call_aggregation(inputs, method='larsen', typ='singleton')
-    print("COA: " + str(round(COA(result2), 2)) + "% of risk")
+    result4 = system.call_aggregation(inputs, method='larsen', typ='singleton')
+    print("COA: " + str(round(COA(result4), 2)) + "% of risk")
+    result5 = system.call_aggregation(inputs, method='larsen', typ='singleton')
+    print("BOA: " + str(round(BOA(result5), 2)) + "% of risk")
+    result6 = system.call_aggregation(inputs, method='larsen', typ='singleton')
+    print("MOM: " + str(round(MOM(result6), 2)) + "% of risk")
